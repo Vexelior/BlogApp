@@ -13,5 +13,7 @@ namespace Blog.Data
         {
 
         }
+
+        public DbSet<BlogPost> BlogPost { get; set; }
     }
 }
