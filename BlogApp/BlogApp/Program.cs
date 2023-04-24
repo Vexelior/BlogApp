@@ -1,43 +1,94 @@
+using BlogApp.Data;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(swaggerGenOptions =>
+{
+    swaggerGenOptions.SwaggerDoc("v1", new OpenApiInfo { Title = "BlogApp", Version = "v1" });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(swaggerUIOptions =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    swaggerUIOptions.DocumentTitle = "BlogApp";
+    swaggerUIOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "Web API serving my blog posts.");
+    swaggerUIOptions.RoutePrefix = string.Empty;
+});
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// Get all posts.
+app.MapGet("/get-all-posts", async () => await PostsRepository.GetPostsAsync())
+    .WithTags("Posts Endpoints");
 
-app.MapGet("/weatherforecast", () =>
+
+// Get post by Id.
+app.MapGet("/get-post-by-id/{postId}", async (int postId) =>
 {
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateTime.Now.AddDays(index),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    Post postToReturn = await PostsRepository.GetPostByIdAsync(postId);
+
+    if (postToReturn != null)
+    {
+        return Results.Ok(postToReturn);
+    }
+    else
+    {
+        return Results.BadRequest();
+    }
+}).WithTags("Posts Endpoints");
+
+
+// Create post.
+app.MapPost("/create-post", async (Post postToCreate) =>
+{
+    bool createSuccessful = await PostsRepository.CreatePostAsync(postToCreate);
+
+    if (createSuccessful)
+    {
+        return Results.Ok("Create successful.");
+    }
+    else
+    {
+        return Results.BadRequest();
+    }
+}).WithTags("Posts Endpoints");
+
+
+// Update post.
+app.MapPut("/update-post", async (Post postToUpdate) =>
+{
+    bool updateSuccessful = await PostsRepository.UpdatePostAsync(postToUpdate);
+
+    if (updateSuccessful)
+    {
+        return Results.Ok("Update successful.");
+    }
+    else
+    {
+        return Results.BadRequest();
+    }
+}).WithTags("Posts Endpoints");
+
+
+// Delete post
+app.MapDelete("/delete-post-by-id/{postId}", async (int postId) =>
+{
+    bool deleteSuccessful = await PostsRepository.DeletePostAsync(postId);
+
+    if (deleteSuccessful)
+    {
+        return Results.Ok("Delete successful.");
+    }
+    else
+    {
+        return Results.BadRequest();
+    }
+}).WithTags("Posts Endpoints");
 
 app.Run();
-
-internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
