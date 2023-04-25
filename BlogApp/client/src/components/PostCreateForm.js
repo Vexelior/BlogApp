@@ -5,8 +5,8 @@ export default function PostCreateForm(props) {
     const initialFromData = Object.freeze({
         title: 'Post X',
         content: 'This is post X',
-        createdAt: '2020-01-01T00:00:00',
-        updatedAt: '2020-01-01T00:00:00',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         authorId: ''
     });
 
@@ -29,10 +29,6 @@ export default function PostCreateForm(props) {
             createdAt: formData.createdAt,
             updatedAt: formData.updatedAt,
             authorId: formData.authorId
-        }
-
-        if (postToCreate.authorId != postToCreate.postId) {
-            postToCreate.authorId = postToCreate.postId;
         }
 
         const url = Constants.API_URL_CREATE_POST;
