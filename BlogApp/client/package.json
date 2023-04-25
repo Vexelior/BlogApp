@@ -37,7 +37,6 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-react": "^7.32.2",
     "jest-editor-support": "^31.0.1"
   }
 }
