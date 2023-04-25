@@ -20,8 +20,5 @@ namespace BlogApp.Data
 
         [Required]
         public DateTime UpdatedAt { get; set; }
-
-        [Required]
-        public string AuthorId { get; set; } = string.Empty;
     }
 }

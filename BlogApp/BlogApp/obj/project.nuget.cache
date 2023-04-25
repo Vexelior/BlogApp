@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lhJCOIL87NKrxBJVe+bO/3eBqyx5VgpCowxX9eHp9SuXZWk91QR2PxY2uiRQlPRi7Bt06sCLxBdul0HXIMMdFg==",
+  "dgSpecHash": "oNhGKvkXiaDxvToxREtM8ri+7XU3k/U1HCt8aGjWDe/nhR9YA2jsLa86V9neRrJzkekrteTlhDcXZTplonKC6g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\asand\\Documents\\GitHub\\BlogApp\\BlogApp\\BlogApp\\BlogApp.csproj",
+  "projectFilePath": "C:\\Users\\asand\\Documents\\GitHub\\App\\BlogApp\\BlogApp\\BlogApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\asand\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\asand\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

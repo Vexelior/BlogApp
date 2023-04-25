@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import PostCreateForm from './components/PostCreateForm'
 import Constants from "./utilities/constants";
+import PostCreateForm from './components/PostCreateForm'
+import PostUpdateForm from './components/PostUpdateForm'
 import './App.css';
 
 export default function App() {
   const [posts, setPosts] = useState([]);
   const [showingCreateNewPostForm, setShowingCreateNewPostForm] = useState(false);
+  const [postCurrentlyBeingUpdated, setPostCurrentlyBeingUpdated] = useState(null);
 
   function getPosts() {
     const url = Constants.API_URL_GET_ALL_POSTS;
@@ -27,9 +29,9 @@ export default function App() {
     <div className='container'>
       <div className='row min-vh-100'>
         <div className='col d-flex flex-column justify-content-center align-items-center'>
-          {showingCreateNewPostForm === false && (
+          {(showingCreateNewPostForm === false && postCurrentlyBeingUpdated === null) && (
             <div>
-              <h1>BlogApp</h1>
+              <h1 className='text-center'>BlogApp</h1>
 
               <div className='mt-5'>
                 <button className='btn btn-dark btn-lg w-100' onClick={getPosts}>Get Posts From Server</button>
@@ -38,9 +40,11 @@ export default function App() {
             </div>
           )}
 
-          {(posts.length > 0 && showingCreateNewPostForm === false) && renderPostsTable()}
+          {(posts.length > 0 && showingCreateNewPostForm === false && postCurrentlyBeingUpdated === null) && renderPostsTable()}
 
           {showingCreateNewPostForm && <PostCreateForm onPostCreated={onPostCreated} />}
+
+          {postCurrentlyBeingUpdated !== null && <PostUpdateForm post={postCurrentlyBeingUpdated} onPostUpdated={onPostUpdated} />}
         </div>
       </div>
     </div>
@@ -48,7 +52,7 @@ export default function App() {
 
   function renderPostsTable() {
     return (
-      <div className='table-responsive mt-5'>
+      <div className='table-responsive mt-5 mb-5'>
         <table className='table table-bordered border-dark'>
           <thead className='thead-dark'>
             <tr>
@@ -69,7 +73,7 @@ export default function App() {
                 <td className='text-nowrap'>{post.createdAt}</td>
                 <td className='text-nowrap'>{post.updatedAt}</td>
                 <td>
-                  <button className='btn btn-dark btn-lg mx-3 my-3'>Update</button>
+                  <button onClick={() => setPostCurrentlyBeingUpdated(post)} className='btn btn-dark btn-lg mx-3 my-3'>Update</button>
                   <button className='btn btn-secondary btn-lg mx-3'>Delete</button>
                 </td>
               </tr>
@@ -91,5 +95,28 @@ export default function App() {
       alert(`Post successfully created. After clicking 'OK', your new post titled '${createdPost.title}' will show up in the table below.`);
       getPosts();
     }
+  }
+
+  function onPostUpdated(updatedPost) {
+    setPostCurrentlyBeingUpdated(null);
+
+    if (updatedPost === null) {
+      return;
+    }
+
+    let postsCopy = [...posts];
+    const index = postsCopy.findIndex((postsCopyPost, currentIndex) => {
+      if (postsCopyPost.postId === updatedPost.postId) {
+        return true;
+      }
+    });
+
+    if (index !== -1) {
+      postsCopy[index] = updatedPost;
+    }
+
+    setPosts(postsCopy);
+
+    alert(`Post successfully updated. After clicking 'OK', look for the post with the title '${updatedPost.title}' in the table below to see the updates.`);
   }
 }
