@@ -3904,11 +3904,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\asand\\Documents\\GitHub\\App\\BlogApp\\BlogApp\\BlogApp.csproj",
+      "projectUniqueName": "C:\\Users\\asand\\Documents\\GitHub\\BlogApp\\BlogApp\\BlogApp\\BlogApp.csproj",
       "projectName": "BlogApp",
-      "projectPath": "C:\\Users\\asand\\Documents\\GitHub\\App\\BlogApp\\BlogApp\\BlogApp.csproj",
+      "projectPath": "C:\\Users\\asand\\Documents\\GitHub\\BlogApp\\BlogApp\\BlogApp\\BlogApp.csproj",
       "packagesPath": "C:\\Users\\asand\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\asand\\Documents\\GitHub\\App\\BlogApp\\BlogApp\\obj\\",
+      "outputPath": "C:\\Users\\asand\\Documents\\GitHub\\BlogApp\\BlogApp\\BlogApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\asand\\AppData\\Roaming\\NuGet\\NuGet.Config",
