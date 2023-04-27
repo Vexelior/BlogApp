@@ -1,0 +1,19 @@
+body {
+    background-image: url('../../../../static/images/background.png');
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.create-form-container {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    transition: 0.3s;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 50%;
+}

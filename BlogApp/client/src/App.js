@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './components/LandingPage';
+import Home from './components/Home/Home';
 import Layout from './components/Layout/Layout';
-import PostDetails from './components/Posts/PostDetails';
-import PostIndex from './components/Posts/PostIndex';
+import PostCreateForm from './components/Posts/Create/PostCreateForm';
+import PostDetails from './components/Posts/Details/PostDetails';
+import PostIndex from './components/Posts/Index/PostIndex';
+import PostUpdateForm from './components/Posts/Update/PostUpdateForm';
 
 export default function App() {
   return (
@@ -10,9 +12,11 @@ export default function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Layout />} />
-        <Route index element={<LandingPage />} />
+        <Route index element={<Home />} />
         <Route path='posts' element={<PostIndex />} />
-        <Route path='posts/:postId' element={<PostDetails />} />
+        <Route path='create' element={<PostCreateForm />} />
+        <Route path='posts/details/:postId' element={<PostDetails />} />
+        <Route path='posts/update/:postId' element={<PostUpdateForm />} />
       </Routes>
     </Router>
     </>
