@@ -50,7 +50,7 @@ export default function PostDetails() {
                                     <small className='text-muted updated-text'> Updated: {post.updatedAt}</small>
                                 </div>
                             </div>
-                            <button className='btn btn-secondary' onClick={() => window.history.back()}>Back</button>
+                            <a className='btn btn-secondary' href='/posts'>Back</a>
                             <a className='btn btn-primary' href={`/posts/update/${post.postId}`}>Edit</a>
                             <button className='btn btn-danger' value={post.postId}>Delete</button>
                         </div>

@@ -1,44 +1,51 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Constants from '../../../utilities/constants'
 import { useParams } from 'react-router-dom';
 import './PostUpdateForm.css';
 
 export default function PostUpdateForm() {
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState([]);
     const { postId } = useParams();
-    const url = `${Constants.API_URL_UPDATE_POST}/${formData.postId}`;
+    const url = Constants.API_URL_UPDATE_POST;
 
-    function handleChange(event) {
-        setFormData({
-            ...formData,
-            [event.target.name]: event.target.value
-        });
+    // Get the details of the post, populate the form with the data
+    const getPostDetails = async () => {
+        const response = await fetch(`${Constants.API_URL_GET_POSTS_BY_ID}/${postId}`);
+        const post = await response.json();
+
+        setFormData(post);
     }
 
-    function handleSubmit(event) {
-        event.preventDefault();
+    useEffect(() => {
+        getPostDetails();
+    }, []);
 
-        const data = {
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const postToUpdate = {
+            postId: formData.postId,
             title: formData.title,
-            content: formData.content
-        };
+            content: formData.content,
+            createdAt: formData.createdAt,
+            updatedAt: new Date()
+        }
 
-        fetch(url, {
+        const response = await fetch(url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            alert('Post updated successfully!');
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            alert(error);
+            body: JSON.stringify(postToUpdate)
         });
+
+        if (response.ok) {
+            window.location.href = `/posts/details/${postId}`;
+        }
     }
 
     return (
