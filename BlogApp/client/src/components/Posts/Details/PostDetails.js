@@ -35,11 +35,6 @@ export default function PostDetails() {
     post.createdAt = createdDate.toLocaleDateString();
     post.updatedAt = updatedDate.toLocaleDateString();
 
-    const deletePostModal = new Modal(document.getElementById('deletePostModal'), {
-        keyboard: false
-    });
-
-
     return (
         <>
             <Layout>
