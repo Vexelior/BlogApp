@@ -23,7 +23,7 @@ export default function PostDelete() {
     
     return (
         <>
-            <div className="modal fade" id="deletePostModal" tabIndex="-1" aria-labelledby="deletePostModalLabel" aria-hidden="true">
+            <div className="modal fade" id="deletePostModal" tabIndex="-1"                              aria-labelledby="deletePostModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                     <div className="modal-header">
@@ -32,7 +32,8 @@ export default function PostDelete() {
                     </div>
                         <div className="modal-body">
                             <p>
-                                Are you sure you want to delete this post?</p>
+                                Are you sure you want to delete this post?     
+                            </p>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No</button>

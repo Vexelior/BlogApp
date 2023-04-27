@@ -5,7 +5,7 @@ import Layout from '../../Layout/Layout';
 import './PostDetails.css';
 
 export default function PostDetails() {
-    const [post, setPost] = useState([]);
+    const [post, setPost] = useState(null);
     const { postId } = useParams();
     const url = `${Constants.API_URL_GET_POSTS_BY_ID}/${postId}`;
 
@@ -27,6 +27,35 @@ export default function PostDetails() {
                 console.log(error);
                 alert(error);
             });
+    }
+
+    function deletePost(postId) {
+        const url = `${Constants.API_URL_DELETE_POST_BY_ID}/${postId}`;
+
+        fetch(url, {
+            method: 'DELETE',
+        })
+        .then(() => {
+            console.log('Post deleted successfully!');
+            onPostDeleted(postId);
+        })
+        .catch((error) => {
+            console.log(error);
+            alert(error);
+        });
+    }
+
+    function onPostDeleted(deletedPostId) {
+        if (post.postId === deletedPostId) {
+            setPost(null);
+        }
+        
+        alert('Post deleted successfully!');
+        window.location.href = '/posts';
+    }
+
+    if (!post) {
+        return null;
     }
 
     const createdDate = new Date(post.createdAt);
@@ -53,10 +82,10 @@ export default function PostDetails() {
                             </div>
                             <a className='btn btn-secondary' href='/posts'>Back</a>
                             <a className='btn btn-primary' href={`/posts/update/${post.postId}`}>Edit</a>
-                            <button className='btn btn-danger' value={post.postId}>Delete</button>
+                            <button className='btn btn-danger' onClick={() => {if (window.confirm(`Are you sure you want to delete the post '${post.title}'?`)) deletePost(post.postId)}}>Delete</button>
                         </div>
                     </div>
-                </div>                
+                </div>
             </Layout>
         </>
     );
