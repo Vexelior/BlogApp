@@ -27,13 +27,12 @@ export default function PostIndex() {
   }
 
   posts.forEach((post) => {
-    post.createdAt = post.createdAt.split('T')[0];
-    post.updatedAt = post.updatedAt.split('T')[0];
 
-    const date = new Date(post.createdAt);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    post.createdAt = date.toLocaleDateString('en-US', options);
-    post.updatedAt = date.toLocaleDateString('en-US', options);
+    const createdDate = new Date(post.createdAt);
+    const updatedDate = new Date(post.updatedAt);
+    
+    post.createdAt = createdDate.toLocaleDateString();
+    post.updatedAt = updatedDate.toLocaleDateString();
   });
 
   function renderPosts() {

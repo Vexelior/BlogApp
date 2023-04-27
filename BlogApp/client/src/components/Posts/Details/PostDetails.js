@@ -15,24 +15,30 @@ export default function PostDetails() {
         }
     }, [postId]);
 
-    function getPost(postId) {
+    function getPost() {
         fetch(url, {
             method: 'GET',
         })
-        .then(response => response.json())
-        .then(postFromServer => {
-            setPost(postFromServer);
-        })
-        .catch((error) => {
-            console.log(error);
-            alert(error);
-        });
+            .then(response => response.json())
+            .then(postFromServer => {
+                setPost(postFromServer);
+            })
+            .catch((error) => {
+                console.log(error);
+                alert(error);
+            });
     }
 
-    const date = new Date(post.createdAt);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    post.createdAt = date.toLocaleDateString('en-US', options);
-    post.updatedAt = date.toLocaleDateString('en-US', options);
+    const createdDate = new Date(post.createdAt);
+    const updatedDate = new Date(post.updatedAt);
+
+    post.createdAt = createdDate.toLocaleDateString();
+    post.updatedAt = updatedDate.toLocaleDateString();
+
+    const deletePostModal = new Modal(document.getElementById('deletePostModal'), {
+        keyboard: false
+    });
+
 
     return (
         <>
@@ -55,7 +61,7 @@ export default function PostDetails() {
                             <button className='btn btn-danger' value={post.postId}>Delete</button>
                         </div>
                     </div>
-                </div>
+                </div>                
             </Layout>
         </>
     );

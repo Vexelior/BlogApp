@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Constants from '../../../utilities/constants'
 import { useParams } from 'react-router-dom';
 import './PostUpdateForm.css';
+import Layout from '../../Layout/Layout';
 
 export default function PostUpdateForm() {
     const [formData, setFormData] = useState([]);
@@ -44,25 +45,30 @@ export default function PostUpdateForm() {
         });
 
         if (response.ok) {
+            alert('Post updated successfully!');
             window.location.href = `/posts/details/${postId}`;
         }
     }
 
     return (
-        <div className='container'>
-            <form className='w-100 px-5'>
-                <h1 className='mt-5'>Edit</h1>
-                <div className='mt-5'>
-                    <label className='h3 form-label'>Title</label>
-                    <input className='form-control' value={formData.title} name='title' type="text" onChange={handleChange} />
+        <Layout>
+            <div className='container'>
+                <div className='update-post-container'>
+                    <form className='w-100 px-5'>
+                        <h1 className='mt-3 text-center'>Edit</h1>
+                        <div className='mt-3'>
+                            <label className='h3 form-label'>Title</label>
+                            <input className='form-control' value={formData.title} name='title' type="text" onChange={handleChange} />
+                        </div>
+                        <div className='mt-3'>
+                            <label className='h3 form-label'>Content</label>
+                            <textarea className='form-control' value={formData.content} name='content' type="text" onChange={handleChange} rows="10"/>
+                        </div>
+                        <button onClick={handleSubmit} className='btn btn-primary w-100 mt-3'>Update</button>
+                        <button className='btn btn-secondary w-100 mt-3' onClick={() => window.location.href = `/posts/details/${postId}`}>Back</button>
+                    </form>
                 </div>
-                <div className='mt-5'>
-                    <label className='h3 form-label'>Content</label>
-                    <textarea className='form-control' value={formData.content} name='content' type="text" onChange={handleChange} rows="10"/>
-                </div>
-                <button onClick={handleSubmit} className='btn btn-primary btn-lg w-100 mt-5'>Update</button>
-            </form>
-            <button className='btn btn-primary btn-lg mt-5' onClick={() => window.location.href = `/posts/details/${postId}`}>Back</button>
-        </div>
+            </div>
+            </Layout>
     )
 }
