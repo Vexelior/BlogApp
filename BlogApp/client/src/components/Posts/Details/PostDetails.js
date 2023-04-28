@@ -6,6 +6,7 @@ import './PostDetails.css';
 
 export default function PostDetails() {
     const [post, setPost] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const { postId } = useParams();
     const url = `${Constants.API_URL_GET_POSTS_BY_ID}/${postId}`;
 
@@ -22,6 +23,9 @@ export default function PostDetails() {
             .then(response => response.json())
             .then(postFromServer => {
                 setPost(postFromServer);
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 500);
             })
             .catch((error) => {
                 console.log(error);
@@ -67,6 +71,11 @@ export default function PostDetails() {
     return (
         <>
             <Layout>
+            {isLoading ? (
+            <div className="loading-icon text-center" style={{ opacity: 0.5, marginTop: '20px' }}>
+              <i className="fa fa-spinner fa-spin"></i>
+            </div>
+            ) : (
                 <div className='container mt-2'>
                     <div className="row justify-content-center">
                         <div className="col">
@@ -86,6 +95,7 @@ export default function PostDetails() {
                         </div>
                     </div>
                 </div>
+            )}
             </Layout>
         </>
     );

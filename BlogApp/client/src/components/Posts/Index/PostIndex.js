@@ -4,6 +4,7 @@ import Layout from '../../Layout/Layout';
 import './PostIndex.css';
 
 export default function PostIndex() {
+  const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -19,6 +20,7 @@ export default function PostIndex() {
       .then(response => response.json())
       .then(postsFromServer => {
         setPosts(postsFromServer);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -61,9 +63,15 @@ export default function PostIndex() {
             <h1>Posts</h1>
           </div>
         </div>
-          <div className='posts-container'>
-            {renderPosts()}
-          </div>
+        {isLoading ? (
+            <div className="loading-icon text-center" style={{ opacity: 0.5 }}>
+              <i className="fa fa-spinner fa-spin"></i>
+            </div>
+          ) : (
+            <div className='posts-container'>
+              {renderPosts()}
+            </div>
+          )}
       </Layout>
     </>
   );

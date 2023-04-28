@@ -6,6 +6,7 @@ import Layout from '../../Layout/Layout';
 
 export default function PostUpdateForm() {
     const [formData, setFormData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const { postId } = useParams();
     const url = Constants.API_URL_UPDATE_POST;
 
@@ -13,6 +14,12 @@ export default function PostUpdateForm() {
     const getPostDetails = async () => {
         const response = await fetch(`${Constants.API_URL_GET_POSTS_BY_ID}/${postId}`);
         const post = await response.json();
+        
+        if (post !== null) {
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 500);
+        }
 
         setFormData(post);
     }
@@ -54,21 +61,27 @@ export default function PostUpdateForm() {
         <Layout>
             <div className='container'>
                 <div className='update-post-container'>
-                    <form className='w-100 px-5'>
-                        <h1 className='mt-3 text-center'>Edit</h1>
-                        <div className='mt-3'>
-                            <label className='h3 form-label'>Title</label>
-                            <input className='form-control' value={formData.title} name='title' type="text" onChange={handleChange} />
+                    {isLoading ? (
+                        <div className="loading-icon text-center" style={{ opacity: 0.5 }}>
+                            <i className="fa fa-spinner fa-spin"></i>
                         </div>
-                        <div className='mt-3'>
-                            <label className='h3 form-label'>Content</label>
-                            <textarea className='form-control' value={formData.content} name='content' type="text" onChange={handleChange} rows="10"/>
-                        </div>
-                        <button onClick={handleSubmit} className='btn btn-primary w-100 mt-3'>Update</button>
-                        <button className='btn btn-secondary w-100 mt-3' onClick={() => window.location.href = `/posts/details/${postId}`}>Back</button>
-                    </form>
+                    ) : (
+                        <form className='w-100 px-5'>
+                            <h1 className='mt-3 text-center'>Edit</h1>
+                            <div className='mt-3'>
+                                <label className='h3 form-label'>Title</label>
+                                <input className='form-control' value={formData.title} name='title' type="text" onChange={handleChange} />
+                            </div>
+                            <div className='mt-3'>
+                                <label className='h3 form-label'>Content</label>
+                                <textarea className='form-control' value={formData.content} name='content' type="text" onChange={handleChange} rows="10" />
+                            </div>
+                            <button onClick={handleSubmit} className='btn btn-primary w-100 mt-3'>Update</button>
+                            <a href={`/posts/details/${postId}`} className='btn btn-secondary w-100 mt-3'>Cancel</a>
+                        </form>
+                    )}
                 </div>
             </div>
-            </Layout>
+        </Layout>
     )
 }
