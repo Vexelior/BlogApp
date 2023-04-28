@@ -10,7 +10,6 @@ export default function PostUpdateForm() {
     const { postId } = useParams();
     const url = Constants.API_URL_UPDATE_POST;
 
-    // Get the details of the post, populate the form with the data
     const getPostDetails = async () => {
         const response = await fetch(`${Constants.API_URL_GET_POSTS_BY_ID}/${postId}`);
         const post = await response.json();

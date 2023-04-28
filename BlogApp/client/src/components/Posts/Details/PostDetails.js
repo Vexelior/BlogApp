@@ -20,17 +20,17 @@ export default function PostDetails() {
         fetch(url, {
             method: 'GET',
         })
-            .then(response => response.json())
-            .then(postFromServer => {
-                setPost(postFromServer);
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, 500);
-            })
-            .catch((error) => {
-                console.log(error);
-                alert(error);
-            });
+        .then(response => response.json())
+        .then(postFromServer => {
+            setPost(postFromServer);
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 500);
+        })
+        .catch((error) => {
+            console.log(error);
+            alert(error);
+        });
     }
 
     function deletePost(postId) {
