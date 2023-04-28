@@ -11,9 +11,19 @@ namespace BlogApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Post post1 = new() { PostId = 1, Title = "First Post", Content = "This is my first post.", CreatedAt = new System.DateTime(2020, 1, 1), UpdatedAt = new System.DateTime(2020, 1, 1) };
+            List<Post> posts = new()
+            {
+                new Post { PostId = 1, Title = "First Post", Content = "This is my first post.", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Post { PostId = 2, Title = "Second Post", Content = "This is my second post.", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Post { PostId = 3, Title = "Third Post", Content = "This is my third post.", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Post { PostId = 4, Title = "Fourth Post", Content = "This is my fourth post.", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Post { PostId = 5, Title = "Fifth Post", Content = "This is my fifth post.", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now }
+            };
 
-            modelBuilder.Entity<Post>().HasData(post1);
+            foreach (Post post in posts)
+            {
+                modelBuilder.Entity<Post>().HasData(post);
+            }
         }
     }
 }
